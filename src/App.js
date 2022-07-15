@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {
+  ChakraProvider,
+  Box,
+  Text,
+  Button,
+  VStack,
+  Code,
+  Grid,
+  theme,
+  HStack,
+  Spacer
+} from '@chakra-ui/react';
+import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 function App() {
+  const closeApp = () => {
+    window.api.closeApp();
+  }
+
+  const hideApp = () => {
+    window.api.hideApp();
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider theme={theme}>
+      <Box textAlign="center" fontSize="xl">
+        <Grid minH="100vh">
+          <HStack height="6vh" style={{ "-webkit-app-region": "drag" }} backgroundColor="gray.900" p="2">
+            <Text>Ethereal Client</Text>
+            <Spacer />
+          </HStack>
+          <VStack spacing={8}>
+            <Text>
+              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
+            </Text>
+            <Button onClick={hideApp}>Hide</Button>
+            <Button onClick={closeApp}>Close</Button>
+            <ColorModeSwitcher />
+          </VStack>
+        </Grid>
+      </Box>
+    </ChakraProvider>
   );
 }
 
