@@ -50,8 +50,8 @@
     "nsis": {
       "oneClick": true,
       "installerIcon": "build/favicon.ico",
-      "uninstallerIcon": "uninstallerIcon.ico",
-      "uninstallDisplayName": "Uninstall Ethereal Client",
+      "uninstallerIcon": "build/favicon.ico",
+      "uninstallDisplayName": "EtherealClientUninstaller",
       "license": "license.md",
       "allowToChangeInstallationDirectory": false
     }

@@ -13,7 +13,7 @@ const createWindow = () => {
         minWidth: 700,
         minHeight: 500,
         webPreferences: {
-            preload: path.join(__dirname, '../public/preload.js'),
+            preload: path.join(__dirname, `../${isDev ? 'public' : 'build'}/preload.js`),
             nodeIntegration: true,
             enableRemoteModule: true
         },
