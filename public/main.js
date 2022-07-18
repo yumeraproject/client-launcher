@@ -1,23 +1,24 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
-require('@electron/remote/main').initialize()
+const { app, BrowserWindow, ipcMain } = require('electron');
+require('@electron/remote/main').initialize();
 
-const path = require('path')
-const isDev = require('electron-is-dev')
+const path = require('path');
+const isDev = require('electron-is-dev');
 
 let window;
 
 const createWindow = () => {
     window = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1280,
+        height: 720,
         minWidth: 700,
         minHeight: 500,
+        autoHideMenuBar: true,
+        frame: false,
+        icon: './favicon.ico',
         webPreferences: {
             preload: path.join(__dirname, `../${isDev ? 'public' : 'build'}/preload.js`),
             nodeIntegration: true,
-            enableRemoteModule: true
         },
-        frame: false
     })
 
     window.loadURL(
@@ -26,7 +27,7 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-    createWindow()
+    createWindow();
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
@@ -45,6 +46,14 @@ ipcMain.on('closeApp', () => {
     app.quit();
 });
 
-ipcMain.on('hideApp', () => {
+ipcMain.on('minimizeWindow', () => {
     window.minimize();
+});
+
+ipcMain.on('maximizeWindow', () => {
+    if (window.isMaximized()) {
+        window.unmaximize();
+    } else {
+        window.maximize();
+    }
 });
