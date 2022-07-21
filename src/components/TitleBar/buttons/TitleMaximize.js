@@ -9,17 +9,17 @@ const TitleMaximize = () => {
 
     return (
         <IconButton
-                aria-label='Maximize'
-                icon={<MdCropSquare />}
-                size='md'
-                height='full'
-                color={useColorModeValue('black', 'white')}
-                _hover={{
-                    bgColor: `${useColorModeValue('blackAlpha.300', 'whiteAlpha.200')}`,
-                }}
-                colorScheme='none'
-                onClick={MaximizeWindow}
-            />
+            aria-label='Maximize'
+            icon={<MdCropSquare />}
+            size='md'
+            height='full'
+            color={useColorModeValue('black', 'white')}
+            _hover={{
+                bgColor: `${useColorModeValue('blackAlpha.300', 'whiteAlpha.200')}`,
+            }}
+            colorScheme='none'
+            onClick={MaximizeWindow}
+        />
     )
 }
 

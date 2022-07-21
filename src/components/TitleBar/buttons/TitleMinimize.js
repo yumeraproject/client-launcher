@@ -9,17 +9,17 @@ const TitleMinimize = () => {
 
     return (
         <IconButton
-                aria-label='Maximize'
-                icon={<MdRemove />}
-                size='md'
-                height='full'
-                color={useColorModeValue('black', 'white')}
-                _hover={{
-                    bgColor: `${useColorModeValue('blackAlpha.300', 'whiteAlpha.200')}`,
-                }}
-                colorScheme='none'
-                onClick={MinimizeWindow}
-            />
+            aria-label='Minimize'
+            icon={<MdRemove />}
+            size='md'
+            height='full'
+            color={useColorModeValue('black', 'white')}
+            _hover={{
+                bgColor: `${useColorModeValue('blackAlpha.300', 'whiteAlpha.200')}`,
+            }}
+            colorScheme='none'
+            onClick={MinimizeWindow}
+        />
     )
 }
 

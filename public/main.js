@@ -4,6 +4,8 @@ require('@electron/remote/main').initialize();
 const path = require('path');
 const isDev = require('electron-is-dev');
 
+const execSync = require('child_process').execSync;
+
 let window;
 
 const createWindow = () => {
@@ -56,4 +58,9 @@ ipcMain.on('maximizeWindow', () => {
     } else {
         window.maximize();
     }
+});
+
+ipcMain.on('launch', () => {
+    const output = execSync('java ');
+    console.log(output);
 });

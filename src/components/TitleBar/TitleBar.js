@@ -6,23 +6,20 @@ import TitleClose from './buttons/TitleClose';
 import TitleMaximize from './buttons/TitleMaximize';
 import TitleMinimize from './buttons/TitleMinimize';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
+import ThemeDivider from '../ThemeDivider';
 
 const TitleBar = () => {
-    const backgroundColor = useColorModeValue('gray.100', 'gray.900');
+    const backgroundColor = useColorModeValue('gray.100', 'dark.300');
 
     return (
         <HStack height="30px" p="2" backgroundColor={backgroundColor}>
             <HStack style={{ "WebkitAppRegion": "drag" }} w='full'>
                 <Image src={logo} alt='logo' height='20px' />
-                <Text as='i' fontWeight='black' textTransform='uppercase' letterSpacing={3}>Ethereal Client</Text>
+                <Text as='i' textTransform='uppercase' letterSpacing={3} fontSize='lg' fontFamily="'modero', sans-serif">Ethereal Launcher</Text>
             </HStack>
             <HStack justifyContent='right'>
                 <ColorModeSwitcher />
-                <Divider 
-                    orientation='vertical' 
-                    h='18px'
-                    borderColor={useColorModeValue('blackAlpha.400', 'whiteAlpha.200')}
-                />
+                <ThemeDivider />
                 <TitleMinimize />
                 <TitleMaximize />
                 <TitleClose/>

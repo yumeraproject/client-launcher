@@ -9,18 +9,18 @@ const TitleClose = () => {
 
     return (
         <IconButton
-                aria-label='Close'
-                icon={<MdClose />}
-                size='md'
-                height='full'
-                color={useColorModeValue('black', 'white')}
-                _hover={{
-                    bgColor: 'red.500',
-                    color: 'white'
-                }}
-                colorScheme='none'
-                onClick={closeApp}
-            />
+            aria-label='Close'
+            icon={<MdClose />}
+            size='md'
+            height='full'
+            color={useColorModeValue('black', 'white')}
+            _hover={{
+                bgColor: 'red.500',
+                color: 'white'
+            }}
+            colorScheme='none'
+            onClick={closeApp}
+        />
     )
 }
 
