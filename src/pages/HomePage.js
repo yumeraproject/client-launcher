@@ -25,7 +25,7 @@ const HomePage = () => {
                 <Fade in>
                     <Box m={5}>
                         <HomeHero />
-                        <Grid templateRows='repeat(2, 1fr)' templateColumns='repeat(5, 1fr)' gap={3} mt='3'>
+                        <Grid templateRows='repeat(2, 1fr)' templateColumns='repeat(5, 1fr)' gap={3} mt={10}>
                             <NewsTile rowSpan={1} colSpan={3} />
                         </Grid>
                     </Box>

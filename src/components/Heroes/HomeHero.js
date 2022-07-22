@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HStack, Heading, Text, Button } from '@chakra-ui/react';
 import TerminalCursor from '../TerminalCursor';
-import { BsPlayFill, BsFillGearFill } from 'react-icons/bs'
+import { BsFillGearFill } from 'react-icons/bs'
+import LaunchButton from './buttons/LaunchButton';
+import RunningButton from './buttons/RunningButton';
 
 const HomeHero = () => {
+    const [isLaunching, setLaunching] = useState(false);
+    const [isOpen, setOpened] = useState(false);
+
     const launchGame = () => {
+        setLaunching(true);
         window.api.launch();
     }
+
+    window.ipc.on('launched', () => {
+        setOpened(true);
+        setLaunching(false);
+    });
+
     return (
         <>
             <HStack>
@@ -17,20 +29,11 @@ const HomeHero = () => {
                 01
             </Text>
             <HStack mt={6} >
-                <Button
-                    leftIcon={<BsPlayFill />}
-                    bgColor='primary.100'
-                    shadow='primaryGlow'
-                    _hover={{
-                        bgColor: 'primary.200'
-                    }}
-                    _active={{
-                        bgColor: 'primary.300'
-                    }}
-                    onClick={launchGame}
-                >
-                    Launch Game
-                </Button>
+                {isOpen ? (
+                    <RunningButton />
+                ) : (
+                    <LaunchButton isLaunching={isLaunching} isOpen={isOpen} launchGame={launchGame} />
+                )}
                 <Button leftIcon={<BsFillGearFill />}>
                     Config
                 </Button>

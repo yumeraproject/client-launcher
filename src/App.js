@@ -15,10 +15,15 @@ const theme = extendTheme({
       100: "#7851a9",
       200: "#62428A",
       300: "#4F356E"
+    },
+    secondary: {
+      100: "#FF7F50",
+      200: "#FF6933"
     }
   },
   shadows: {
-    primaryGlow: '0px 0px 8px #5B3B8C'
+    primaryGlow: '0px 0px 8px #5B3B8C',
+    secondaryGlow: '0px 0px 8px #FF7F50'
   },
   fonts: {
     heading: `'Roboto', sans-serif`,

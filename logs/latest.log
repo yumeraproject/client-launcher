@@ -1,0 +1,15 @@
+[00:10:21] [Client thread/ERROR]: Can't find the resource index file: C:\Users\Ethan Harris\AppData\Roaming\.minecraft\assets\indexes\1.8.9.json
+[00:10:21] [Client thread/INFO]: Setting user: EtherealClient
+[00:10:21] [Client thread/INFO]: (Session ID is token:aeef7bc935f9420eb6314dea7ad7e1e5:N/A)
+[00:10:22] [Client thread/INFO]: LWJGL Version: 2.9.4
+[00:10:24] [Client thread/INFO]: Reloading ResourceManager: Default, !      §8pax§710 §dRose.zip
+[00:10:24] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[00:10:24] [Thread-6/INFO]: Initializing LWJGL OpenAL
+[00:10:24] [Thread-6/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[00:10:25] [Thread-6/INFO]: OpenAL initialized.
+[00:10:25] [Sound Library Loader/INFO]: Sound engine started
+[00:10:26] [Client thread/INFO]: Created: 1024x512 textures-atlas
+[00:10:30] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[00:10:30] [Client thread/INFO]: Stopping!
+[00:10:30] [Client thread/INFO]: SoundSystem shutting down...
+[00:10:30] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com

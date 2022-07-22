@@ -1,10 +1,15 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 require('@electron/remote/main').initialize();
-
 const path = require('path');
 const isDev = require('electron-is-dev');
+const execSync = require('child_process').exec;
+const system = require('os');
+const { exec } = require('child_process');
 
-const execSync = require('child_process').execSync;
+const nativesPath = system.homedir() + path.sep + ".ethereal" + path.sep + "natives";
+const librariesPath = system.homedir() + path.sep + ".ethereal" + path.sep + "libraries";
+const jarPath = system.homedir() + path.sep + ".ethereal" + path.sep + "client.jar";
+const gameDirectory = system.homedir() + path.sep + "AppData" + path.sep + "Roaming" + path.sep + ".minecraft";
 
 let window;
 
@@ -61,6 +66,18 @@ ipcMain.on('maximizeWindow', () => {
 });
 
 ipcMain.on('launch', () => {
-    const output = execSync('java ');
-    console.log(output);
+    try {
+        exec('java '
+            + '-Xms1024M -Xmx4096M '
+            + `-Djava.library.path="${nativesPath}" `
+            + `-cp "${librariesPath + path.sep}*;${jarPath}" `
+            + 'net.minecraft.client.main.Main '
+            + '--width 854 --height 480 --username EtherealClient --version 1.8.9 '
+            + `--gameDir "${gameDirectory}" `
+            + `--assetsDir "${gameDirectory + path.sep}assets" --assetIndex 1.8.9 `
+            + '--uuid N/A --accessToken aeef7bc935f9420eb6314dea7ad7e1e5 --userType mojang');
+            setTimeout(() => window.webContents.send('launched'), 2000)
+    } catch (error) {
+        console.error(error);
+    }
 });

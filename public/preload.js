@@ -7,4 +7,9 @@ const API = {
     launch: () => ipcRenderer.send('launch')
 }
 
+ipcRenderer.on('launched', () => {
+    console.log('ratio');
+})
+
 contextBridge.exposeInMainWorld("api", API);
+contextBridge.exposeInMainWorld("ipc", { on: ipcRenderer.on.bind(ipcRenderer) });
