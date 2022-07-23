@@ -5,9 +5,14 @@ const isDev = require('electron-is-dev');
 const child = require('child_process');
 const system = require('os');
 
-const nativesPath = system.homedir() + path.sep + ".ethereal" + path.sep + "natives";
-const librariesPath = system.homedir() + path.sep + ".ethereal" + path.sep + "libraries";
-const jarPath = system.homedir() + path.sep + ".ethereal" + path.sep + "client.jar";
+const jre = require('node-jre');
+const jreUtil = require('./util/jreUtil');
+
+const mainPath = system.homedir() + path.sep + ".ethereal" + path.sep;
+const nativesPath = mainPath + "natives";
+const librariesPath = mainPath + "libraries/*";
+const jarPath = mainPath + "client.jar";
+const offlinePath = mainPath + "offline";
 const gameDirectory = system.homedir() + path.sep + "AppData" + path.sep + "Roaming" + path.sep + ".minecraft";
 
 let window;
@@ -34,7 +39,6 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
     createWindow();
-
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
             createWindow(window);
@@ -64,24 +68,37 @@ ipcMain.on('maximizeWindow', () => {
     }
 });
 
-ipcMain.handle('launchClient', () => {
-    const client = child.spawn('java '
-        + '-Xms1024M -Xmx4096M '
-        + `-Djava.library.path="${nativesPath}" `
-        + `-cp "${librariesPath + path.sep}*;${jarPath}" `
-        + 'net.minecraft.client.main.Main '
-        + '--width 854 --height 480 --username EtherealClient --version 1.8.9 '
-        + `--gameDir "${gameDirectory}" `
-        + `--assetsDir "${gameDirectory + path.sep}assets" --assetIndex 1.8.9 `
-        + '--uuid N/A --accessToken aeef7bc935f9420eb6314dea7ad7e1e5 --userType mojang');
-        client.on('close', () => console.log('closed'))
+ipcMain.handle('launchClient', async () => {
+    // Ensure JRE is properly installed
+    await jreUtil.checkJRE();
 
+    const client = child.spawn(jre.driver(), [
+        '-Xms1024M',
+        '-Xmx4096M',
+        `-Djava.library.path=${nativesPath}`,
+        '-XX:+DisableAttachMechanism',
+        `-cp`, jreUtil.joinClassPath([`${librariesPath}`, `${jarPath}`]),
+        'net.minecraft.client.main.Main',
+        '--width', '854',
+        '--height', '480',
+        '--version', 'Ethereal Client',
+        '--accessToken', '0',
+        '--userProperties', '{}',
+        '--gameDir', `${gameDirectory}`,
+        `--assetsDir`, `${gameDirectory + path.sep}assets`,
+        '--assetIndex', '1.8.9'
+    ]);
+
+    client.stdout.on('data', (data) => console.log(`stdout: ${data}`));
+    client.stderr.on('data', (data) => console.log(`stderr: ${data}`));
+
+    client.on('close', () => window.webContents.send('clientQuit'));
     return true;
 });
 
 ipcMain.handle('closeClient', () => {
     try {
-        child.exec('taskkill /F /IM java.exe /T');
+        child.exec('taskkill /F /IM javaw.exe /T');
         return true;
     } catch (error) {
         return error;

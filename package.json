@@ -12,6 +12,8 @@
     "@testing-library/user-event": "^14.2.3",
     "electron-is-dev": "^2.0.0",
     "framer-motion": "^6.5.1",
+    "njre": "^0.3.0",
+    "node-jre": "^0.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^3.11.0",

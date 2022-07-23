@@ -51,6 +51,11 @@ const HomeHero = () => {
         })
     };
 
+    window.ipc.on('clientQuit', () => {
+        setRunning(false);
+        setLaunching(false);
+    });
+
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const displayError = () => {
