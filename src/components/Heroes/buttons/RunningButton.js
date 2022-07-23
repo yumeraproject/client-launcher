@@ -1,18 +1,20 @@
 import React from 'react';
-import { Button } from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react';
+import { FaPause } from 'react-icons/fa';
 
-const RunningButton = () => {
+const RunningButton = ({ closeGame }) => {
     return (
-        <Button
-            bgColor='secondary.100'
-            shadow='secondaryGlow'
+        <IconButton
+            icon={<FaPause />}
+            bgColor='warning.100-T'
+            shadow='warningGlow'
             color='white'
             _hover={{
-                bgColor: 'secondary.200'
+                bgColor: 'warning.200-T'
             }}
-        >
-            Game Running
-        </Button>
+            onClick={closeGame}
+        />
+
     )
 }
 

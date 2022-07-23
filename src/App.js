@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme, theme as oldTheme } from '@chakra-ui/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 
@@ -16,21 +16,43 @@ const theme = extendTheme({
       200: "#62428A",
       300: "#4F356E"
     },
-    secondary: {
+    warning: {
       100: "#FF7F50",
-      200: "#FF6933"
+      200: "#FF7847",
+      "100-T": "rgb(255, 127, 80, 0.75)",
+      "200-T": "rgb(255, 120, 71, 0.75)"
+    },
+    error: {
+      100: "#D0312D",
+      200: "#B82B28",
+      "100-T": "rgb(208, 49, 45, 0.75)",
+      "200-T": "rgb(184, 43, 40, 0.75)"
     }
   },
   shadows: {
     primaryGlow: '0px 0px 8px #5B3B8C',
-    secondaryGlow: '0px 0px 8px #FF7F50'
+    warningGlow: '0px 0px 8px #FF7F50',
+    errorGlow: '0px 0px 8px #D0312D'
   },
   fonts: {
     heading: `'Roboto', sans-serif`,
+  },
+  components: {
+    Alert: {
+      variants: {
+        error: {
+          container: {
+            color: "white",
+            bg: "error.200-T"
+          }
+        }
+      }
+    }
   }
 })
 
 function App() {
+
   return (
     <ChakraProvider theme={theme}>
       <Router>

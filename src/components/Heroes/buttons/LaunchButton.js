@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button } from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react';
 import { BsPlayFill } from 'react-icons/bs'
 
 const LaunchButton = ({ launchGame, isLaunching }) => {
     return (
-        <Button
-            leftIcon={<BsPlayFill />}
+        <IconButton
+            icon={<BsPlayFill />}
             bgColor='primary.100'
             shadow='primaryGlow'
             color='white'
@@ -17,9 +17,7 @@ const LaunchButton = ({ launchGame, isLaunching }) => {
             }}
             onClick={launchGame}
             isLoading={isLaunching}
-        >
-            Launch Game
-        </Button>
+        />
     )
 }
 
