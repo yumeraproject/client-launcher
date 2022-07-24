@@ -9,7 +9,8 @@ const theme = extendTheme({
       100: "#333333",
       200: "#212121",
       300: "#1F1F1F",
-      400: "#141414"
+      400: "#141414",
+      "300-T": "rgb(31, 31, 31, 0.8)"
     },
     primary: {
       100: "#7851a9",
@@ -36,6 +37,9 @@ const theme = extendTheme({
   },
   fonts: {
     heading: `'Roboto', sans-serif`,
+  },
+  fontSizes: {
+    "2xs": "0.60rem",
   },
   components: {
     Alert: {

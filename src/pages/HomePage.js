@@ -7,11 +7,11 @@ import { HashLoader } from 'react-spinners';
 
 const HomePage = () => {
     const backgroundColor = useColorModeValue('gray.200', 'dark.400');
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
-    const finishLoading = () => setLoading(false);
+    // const finishLoading = () => setLoading(false);
 
-    useTimeout(finishLoading, 3000);
+    // useTimeout(finishLoading, 3000);
 
     return (
         <Box bg={backgroundColor} minH='100vh' userSelect='none'>

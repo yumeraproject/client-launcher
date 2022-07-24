@@ -18,6 +18,17 @@ const NewsTile = ({ rowSpan, colSpan }) => {
                         imageUrl={MedievalBackground}
                         timestamp="23/07/2022"
                         description="Ethereal Client is hosting a public beta. All participants will recieve a complimentary beta tester badge."
+                        postUrl="https://google.com"
+                    />
+                    <NewsCard
+                        title="1.12.2 Update"
+                        subTitle="Client Update"
+                        author="hamtsu"
+                        authorUUID="ef3e45c0-0afd-445c-a849-257dafe4429e"
+                        imageUrl={MedievalBackground}
+                        timestamp="23/07/2022"
+                        description="Ethereal Client is hosting a public beta. All participants will recieve a complimentary beta tester badge."
+                        postUrl="https://google.com"
                     />
                 </Grid>
             </Box>

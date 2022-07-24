@@ -6,6 +6,7 @@ const API = {
     maximizeWindow: () => ipcRenderer.send("maximizeWindow"),
     launchClient: () => ipcRenderer.invoke('launchClient'),
     closeClient: () => ipcRenderer.invoke('closeClient'),
+    openLink: (link) => ipcRenderer.send('openLink', link),
 }
 
 contextBridge.exposeInMainWorld("api", API);
