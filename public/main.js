@@ -5,9 +5,12 @@ const isDev = require('electron-is-dev');
 const child = require('child_process');
 const system = require('os');
 const shell = require('electron').shell;
+const log = require('electron-log');
+const moment = require('moment');
 
 const jre = require('./util/jre/jre');
 const jreUtil = require('./util/jre/jreUtil');
+const { HWID } = require('./config/constants');
 
 // Constants
 const mainPath = system.homedir() + path.sep + ".ethereal" + path.sep;
@@ -16,8 +19,13 @@ const librariesPath = mainPath + "libraries/*";
 const jarPath = mainPath + "client.jar";
 const gameDirectory = system.homedir() + path.sep + "AppData" + path.sep + "Roaming" + path.sep + ".minecraft";
 
-let window;
+// Set Log directory
+log.transports.file.resolvePath = () => path.join(mainPath, `logs/launcher-${moment().format("YYYY-MM-DD")}.log`);
+log.info(`NEW LOG INSTANCE - ${moment().format("YYYY-MM-DD, h:mm:ss a")}`);
 
+const logDirectory = log.transports.file.getFile().path;
+
+let window;
 const createWindow = () => {
     window = new BrowserWindow({
         width: 1280,
@@ -70,10 +78,13 @@ ipcMain.on('maximizeWindow', () => {
 });
 
 ipcMain.handle('launchClient', async () => {
+    log.info('Launching Game Client..');
+
     window.webContents.send('progress', {
         percentage: 10,
         step: 'Validating JRE'
     });
+    log.info('(Step 1/1) Validating JRE');
 
     // Ensure JRE is properly installed
     await jreUtil.checkJRE();
@@ -82,9 +93,9 @@ ipcMain.handle('launchClient', async () => {
         percentage: 90,
         step: 'Starting Game'
     });
+    log.info('Attempting to Start Game Client...');
 
     try {
-        throw 'error lmfao'
         const client = child.spawn(jre.driver(), [
             '-Xms1024M',
             '-Xmx4096M',
@@ -103,16 +114,18 @@ ipcMain.handle('launchClient', async () => {
         ]);
     
         client.stdout.on('data', (data) => console.log(`stdout: ${data}`));
-        client.stderr.on('data', (data) => console.log(`stderr: ${data}`));
+        client.stderr.on('data', (data) => log.warn(data));
     
         window.webContents.send('progress', {
             percentage: 100,
             step: 'Game Started'
         });
+        log.info('Client Successfully Started');
 
         client.on('close', () => window.webContents.send('clientQuit'));
         return true;   
     } catch (error) {
+        log.warn(`Failed to launch client: ${error}`);
         return error;
     }
 });
@@ -122,6 +135,7 @@ ipcMain.handle('closeClient', () => {
         child.exec('taskkill /F /IM javaw.exe /T');
         return true;
     } catch (error) {
+        log.warn(`Failed to close client: ${error}`);
         return error;
     }
 });

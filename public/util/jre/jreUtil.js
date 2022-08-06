@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const jre = require("./jre");
+const log = require('electron-log')
 
 const checkJRE = exports.checkJRE = async () => {
     const dir = fs.existsSync(jre.jreDir());
@@ -24,6 +25,7 @@ const checkJRE = exports.checkJRE = async () => {
     }
 
     if (installRequired) {
+        log.info('JRE not found. Installing...');
         return new Promise((resolve, reject) => {
             jre.install(resolve);
         });
