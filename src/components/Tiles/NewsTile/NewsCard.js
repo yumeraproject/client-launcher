@@ -2,7 +2,6 @@ import { Box, GridItem, useColorModeValue, Center, VStack, Text, Heading, Divide
 import React from 'react';
 import { FaLink } from 'react-icons/fa';
 import CopyButton from '../../CopyButton';
-import ThemeDivider from '../../ThemeDivider';
 
 const NewsCard = ({ title, subTitle, author, authorUUID, description, imageUrl, postUrl }) => {
 

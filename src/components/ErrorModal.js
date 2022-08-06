@@ -10,7 +10,7 @@ const ErrorModal = ({ isOpen, onClose, errorMessage, errorState, progressState }
         progressState({
             percentage: null,
             step: null
-        })
+        });
     }
 
     return (

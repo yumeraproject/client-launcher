@@ -78,7 +78,13 @@ ipcMain.handle('launchClient', async () => {
     // Ensure JRE is properly installed
     await jreUtil.checkJRE();
 
+    window.webContents.send('progress', {
+        percentage: 90,
+        step: 'Starting Game'
+    });
+
     try {
+        throw 'error lmfao'
         const client = child.spawn(jre.driver(), [
             '-Xms1024M',
             '-Xmx4096M',
@@ -101,7 +107,7 @@ ipcMain.handle('launchClient', async () => {
     
         window.webContents.send('progress', {
             percentage: 100,
-            step: 'Started Game'
+            step: 'Game Started'
         });
 
         client.on('close', () => window.webContents.send('clientQuit'));

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HStack, Text, Image, useColorModeValue, Divider } from '@chakra-ui/react';
+import { HStack, Text, Image, useColorModeValue } from '@chakra-ui/react';
 
 import logo from '../../images/logo.png';
 import TitleClose from './buttons/TitleClose';

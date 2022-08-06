@@ -24,7 +24,7 @@ const HomeHero = () => {
     });
 
     const handleError = (launch, error) => {
-        setError(`${`Failed to ${launch ? 'launch' : 'close'} client at: ` + error}`);
+        setError(`${`Failed to ${launch ? 'launch' : 'close'} client: ` + error}`);
         toast({
             position: 'bottom',
             title: `Error ${launch ? 'launching' : 'closing'} client`,
@@ -94,7 +94,7 @@ const HomeHero = () => {
             >
                 <Box p={5} backdropFilter='blur(1px)'>
                     <HStack>
-                        <Heading textTransform='uppercase' letterSpacing={3}>Hello Hamtsu</Heading>
+                        <Heading textTransform='uppercase' letterSpacing={3}>Ethereal Client</Heading>
                         <TerminalCursor />
                     </HStack>
                     <Text fontFamily='PROJECT SPACE'>
