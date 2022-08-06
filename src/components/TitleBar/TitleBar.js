@@ -21,7 +21,7 @@ const TitleBar = () => {
                 <ColorModeSwitcher />
                 <ThemeDivider />
                 <TitleMinimize />
-                <TitleMaximize />
+                {/* <TitleMaximize /> */}
                 <TitleClose/>
             </HStack>
         </HStack>

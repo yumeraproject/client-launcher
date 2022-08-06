@@ -1,4 +1,4 @@
-import { Box, GridItem, useColorModeValue, Center, VStack, Text, Heading, Divider, HStack, Button, Spacer, Image, Tooltip } from '@chakra-ui/react';
+import { Box, GridItem, useColorModeValue, Center, VStack, Text, Heading, Divider, HStack, Button, Spacer, Image, Tooltip, LightMode } from '@chakra-ui/react';
 import React from 'react';
 import { FaLink } from 'react-icons/fa';
 import CopyButton from '../../CopyButton';
@@ -23,13 +23,15 @@ const NewsCard = ({ title, subTitle, author, authorUUID, description, imageUrl, 
             <Box>
                 <Box textAlign='center' rounded='lg' m={3} p={2} bg={useColorModeValue('gray.300', 'dark.300')} shadow='md'>
                     <HStack>
-                        <Button
-                            colorScheme='green'
-                            size='sm'
-                            onClick={() => window.api.openLink(postUrl)}
-                        >
-                            View more
-                        </Button>
+                        <LightMode>
+                            <Button
+                                colorScheme='green'
+                                size='sm'
+                                onClick={() => window.api.openLink(postUrl)}
+                            >
+                                View more
+                            </Button>
+                        </LightMode>
                         <CopyButton text={postUrl} customIcon={<FaLink />} size='sm' />
                         <Spacer />
                         <Divider orientation='vertical' h='24px' pr={2} />

@@ -30,8 +30,10 @@ const createWindow = () => {
     window = new BrowserWindow({
         width: 1280,
         height: 720,
-        minWidth: 1280,
-        minHeight: 720,
+        maxWidth: 1280,
+        maxHeight: 720,
+        resizable: false,
+        fullscreenable: false,
         autoHideMenuBar: true,
         frame: false,
         icon: './favicon.ico',
@@ -69,11 +71,19 @@ ipcMain.on('minimizeWindow', () => {
     window.minimize();
 });
 
-ipcMain.on('maximizeWindow', () => {
-    if (window.isMaximized()) {
-        window.unmaximize();
-    } else {
-        window.maximize();
+// ipcMain.on('maximizeWindow', () => {
+//     if (window.isMaximized()) {
+//         window.unmaximize();
+//     } else {
+//         window.maximize();
+//     }
+// });
+
+ipcMain.handle('fetchVersions', () => {
+    return {
+        electron: process.versions.electron,
+        node: process.versions.node,
+        launcher: '1.0.0',
     }
 });
 
@@ -96,6 +106,7 @@ ipcMain.handle('launchClient', async () => {
     log.info('Attempting to Start Game Client...');
 
     try {
+        throw 'err'
         const client = child.spawn(jre.driver(), [
             '-Xms1024M',
             '-Xmx4096M',
@@ -120,9 +131,12 @@ ipcMain.handle('launchClient', async () => {
             percentage: 100,
             step: 'Game Started'
         });
-        log.info('Client Successfully Started');
+        log.info('Client Successfully Started.');
 
-        client.on('close', () => window.webContents.send('clientQuit'));
+        client.on('close', () => {
+            window.webContents.send('clientQuit');
+            log.info('Client has been quit.');
+        });
         return true;   
     } catch (error) {
         log.warn(`Failed to launch client: ${error}`);
