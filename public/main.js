@@ -21,7 +21,7 @@ const gameDirectory = system.homedir() + path.sep + "AppData" + path.sep + "Roam
 
 // Set Log directory
 log.transports.file.resolvePath = () => path.join(mainPath, `logs/launcher-${moment().format("YYYY-MM-DD")}.log`);
-log.info(`NEW LOG INSTANCE - ${moment().format("YYYY-MM-DD, h:mm:ss a")}`);
+log.info(`Launcher Started - ${moment().format("YYYY-MM-DD, h:mm:ss a")}`);
 
 const logDirectory = log.transports.file.getFile().path;
 
@@ -70,14 +70,6 @@ ipcMain.on('closeApp', () => {
 ipcMain.on('minimizeWindow', () => {
     window.minimize();
 });
-
-// ipcMain.on('maximizeWindow', () => {
-//     if (window.isMaximized()) {
-//         window.unmaximize();
-//     } else {
-//         window.maximize();
-//     }
-// });
 
 ipcMain.handle('fetchVersions', () => {
     return {

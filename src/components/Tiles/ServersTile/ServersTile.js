@@ -13,7 +13,7 @@ const ServersTile = ({ rowSpan, colSpan }) => {
 
     return (
         <GridItem rowSpan={rowSpan} colSpan={colSpan}>
-            <Heading letterSpacing={3} size='xs' as='i' color='dark.100'>SERVERS</Heading>
+            <Heading letterSpacing={3} size='xs' as='i' color='dark.100'>PARTNERED SERVERS</Heading>
             <Box mt={2} bg={backgroundColor} p={2} rounded='md'>
                 <Grid templateColumns='repeat(4, 1fr)'>
                     <ServerCard name='Ethereal Network' address='ethereal.dev' icon={mockIcon} />
@@ -29,7 +29,7 @@ const ServersTile = ({ rowSpan, colSpan }) => {
                     }}
                     mt={1}
                 >
-                    View All
+                    Apply for partnership
                 </Button>
             </Box>
         </GridItem>

@@ -3,7 +3,6 @@ import { HStack, Text, Image, useColorModeValue } from '@chakra-ui/react';
 
 import logo from '../../images/logo.png';
 import TitleClose from './buttons/TitleClose';
-import TitleMaximize from './buttons/TitleMaximize';
 import TitleMinimize from './buttons/TitleMinimize';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import ThemeDivider from '../ThemeDivider';
@@ -21,7 +20,6 @@ const TitleBar = () => {
                 <ColorModeSwitcher />
                 <ThemeDivider />
                 <TitleMinimize />
-                {/* <TitleMaximize /> */}
                 <TitleClose/>
             </HStack>
         </HStack>

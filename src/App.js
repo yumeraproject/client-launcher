@@ -1,9 +1,11 @@
 import React from 'react';
-import { ChakraProvider, extendTheme, theme as oldTheme } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 
 const theme = extendTheme({
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
   colors: {
     dark: {
       100: "#333333",
