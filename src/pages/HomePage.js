@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Center, Fade, Grid, useColorModeValue, useTimeout } from '@chakra-ui/react';
+import { Box, Center, Fade, Grid, useColorModeValue, useTimeout, Text } from '@chakra-ui/react';
 import TitleBar from '../components/TitleBar/TitleBar';
 import NewsTile from '../components/Tiles/NewsTile/NewsTile';
 import HomeHero from '../components/Heroes/HomeHero';

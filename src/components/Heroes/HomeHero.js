@@ -7,17 +7,21 @@ import MedievalBackground from '../../images/backgrounds/Medieval.png';
 import ErrorButton from './buttons/ErrorButton';
 import ErrorModal from '../ErrorModal';
 import ConfigButton from './buttons/ConfigButton';
+import ConfigModal from '../Config/ConfigModal';
 
 const HomeHero = () => {
     const toast = useToast();
     const [isLaunching, setLaunching] = useState(false);
     const [isRunning, setRunning] = useState(false);
     const [error, setError] = useState(false);
-
     const [progress, setProgress] = useState({
         percentage: null,
         step: null
     });
+
+    // Modals
+    const { isOpen: errorIsOpen, onOpen: errorOnOpen, onClose: errorOnClose } = useDisclosure();
+    const { isOpen: configIsOpen, onOpen: configOnOpen, onClose: configOnClose } = useDisclosure();
 
     window.ipc.on('progress', (event, progress) => {
         setProgress(progress);
@@ -73,17 +77,16 @@ const HomeHero = () => {
         });
     });
 
-    // Modal that displays error details
-    const { isOpen, onOpen, onClose } = useDisclosure();
-
     const displayError = () => {
-        onOpen();
+        errorOnOpen();
     };
 
     return (
         <>
-            {/* Modal that displays error details */}
-            <ErrorModal isOpen={isOpen} onClose={onClose} errorMessage={error} errorState={setError} progressState={setProgress} />
+            {/* Modals */}
+            <ErrorModal isOpen={errorIsOpen} onClose={errorOnClose} errorMessage={error} errorState={setError} progressState={setProgress} />
+            <ConfigModal isOpen={configIsOpen} onClose={configOnClose} />
+
             <Box
                 background={`linear-gradient(to bottom, rgba(0, 0, 0, 0.1), ${useColorModeValue('rgba(0, 0, 0, 0.3)', 'rgba(0, 0, 0, 0.55)')}), url(${MedievalBackground})`}
                 backgroundSize='cover'
@@ -101,14 +104,14 @@ const HomeHero = () => {
                         01
                     </Text>
                     <HStack mt={6} >
-                        <ConfigButton />
+                        <ConfigButton onOpen={configOnOpen} />
                         {
                             error ? (
                                 <ErrorButton displayError={displayError} />
                             ) : isRunning ? (
                                 <RunningButton closeGame={closeGame} />
                             ) : (
-                                <LaunchButton isLaunching={isLaunching} isOpen={isOpen} launchGame={launchGame} />
+                                <LaunchButton isLaunching={isLaunching} isOpen={errorIsOpen} launchGame={launchGame} />
                             )
                         }
                         <ScaleFade in={progress.step !== null}>

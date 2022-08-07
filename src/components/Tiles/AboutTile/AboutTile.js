@@ -40,9 +40,18 @@ const AboutTile = ({ rowSpan, colSpan }) => {
                             </HStack>
                             <Box bg={useColorModeValue('gray.200', 'dark.300')} py={2} px={5} rounded='md'>
                                 <HStack>
-                                    <Button size='xs' leftIcon={<FaGlobe />} _hover={{ bg: 'primary.100', color: 'gray.100', shadow: useColorModeValue('', 'primaryGlow') }}>Website</Button>
-                                    <Button size='xs' leftIcon={<FaTicketAlt />} _hover={{ bg: 'primary.100', color: 'gray.100', shadow: useColorModeValue('', 'primaryGlow') }}>Support</Button>
-                                    <Button size='xs' leftIcon={<FaDiscord />} _hover={{ bg: 'primary.100', color: 'gray.100', shadow: useColorModeValue('', 'primaryGlow') }}>Discord</Button>
+                                    <Button size='xs' leftIcon={<FaGlobe />} 
+                                    _hover={{ bg: 'primary.100', color: 'gray.100', shadow: useColorModeValue('', 'primaryGlow') }}
+                                    _active={{ bg: 'primary.200' }}
+                                    >Website</Button>
+                                    <Button size='xs' leftIcon={<FaTicketAlt />} 
+                                    _hover={{ bg: 'primary.100', color: 'gray.100', shadow: useColorModeValue('', 'primaryGlow') }}
+                                    _active={{ bg: 'primary.200' }}
+                                    >Support</Button>
+                                    <Button size='xs' leftIcon={<FaDiscord />} 
+                                    _active={{ bg: 'primary.200' }}
+                                    _hover={{ bg: 'primary.100', color: 'gray.100', shadow: useColorModeValue('', 'primaryGlow') }}
+                                    >Discord</Button>
                                 </HStack>
                             </Box>
                         </VStack>

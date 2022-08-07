@@ -98,7 +98,7 @@ ipcMain.handle('launchClient', async () => {
     log.info('Attempting to Start Game Client...');
 
     try {
-        throw 'err'
+        throw 'test error lmaoo'
         const client = child.spawn(jre.driver(), [
             '-Xms1024M',
             '-Xmx4096M',

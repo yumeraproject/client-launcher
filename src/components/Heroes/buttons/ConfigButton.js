@@ -2,7 +2,8 @@ import React from 'react';
 import { Button } from '@chakra-ui/react';
 import { BsGearFill } from 'react-icons/bs';
 
-const ConfigButton = () => {
+const ConfigButton = ({ onOpen }) => {
+
     return (
         <Button
             leftIcon={<BsGearFill />}
@@ -14,6 +15,7 @@ const ConfigButton = () => {
             _active={{
                 bgColor: 'whiteAlpha.200'
             }}
+            onClick={onOpen}
         >
             Config
         </Button>
