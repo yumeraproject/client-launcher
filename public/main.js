@@ -11,6 +11,7 @@ const moment = require('moment');
 const jre = require('./util/jre/jre');
 const jreUtil = require('./util/jre/jreUtil');
 const { HWID } = require('./config/constants');
+const { getAllocatedMemory, setAllocatedMemory, getLaunchAddress, setLaunchAddress } = require('./config/config');
 
 // Constants
 const mainPath = system.homedir() + path.sep + ".ethereal" + path.sep;
@@ -71,6 +72,29 @@ ipcMain.on('minimizeWindow', () => {
     window.minimize();
 });
 
+// Configurations
+ipcMain.handle('getAllocatedMemory', () => {
+    return getAllocatedMemory();
+});
+
+ipcMain.on('setAllocatedMemory', (event, val) => {
+    setAllocatedMemory(val);
+    log.info('CONFIG: Setting allocated memory to ' + val + ` (${getAllocatedMemory() * 1000}M)`)
+});
+
+ipcMain.handle('getMaxAllocatedMemory', () => {
+    return (system.totalmem() / 1024 / 1024 / 1000).toFixed(1);
+});
+
+ipcMain.on('setLaunchServer', (event, status, address) => {
+    setLaunchAddress(status, address);
+    log.info('CONFIG: Setting launch address to ' + status + ' with ' + address)
+});
+
+ipcMain.handle('getLaunchServer', () => {
+    return getLaunchAddress();
+});
+
 ipcMain.handle('fetchVersions', () => {
     return {
         electron: process.versions.electron,
@@ -80,6 +104,8 @@ ipcMain.handle('fetchVersions', () => {
 });
 
 ipcMain.handle('launchClient', async () => {
+    const launchAddress = getLaunchAddress();
+
     log.info('Launching Game Client..');
 
     window.webContents.send('progress', {
@@ -98,37 +124,43 @@ ipcMain.handle('launchClient', async () => {
     log.info('Attempting to Start Game Client...');
 
     try {
-        throw 'test error lmaoo'
         const client = child.spawn(jre.driver(), [
-            '-Xms1024M',
-            '-Xmx4096M',
+            `-Xms${(getAllocatedMemory() * 1000)}M`,
+            `-Xmx${(getAllocatedMemory() * 1000)}M`,
             `-Djava.library.path=${nativesPath}`,
             '-XX:+DisableAttachMechanism',
             `-cp`, jreUtil.joinClassPath([`${librariesPath}`, `${jarPath}`]),
             'net.minecraft.client.main.Main',
             '--width', '854',
             '--height', '480',
+            launchAddress.status && '--server', `${launchAddress.address}`,
             '--version', 'Ethereal Client',
             '--accessToken', '0',
             '--userProperties', '{}',
             '--gameDir', `${gameDirectory}`,
             `--assetsDir`, `${gameDirectory + path.sep}assets`,
-            '--assetIndex', '1.8.9'
+            '--assetIndex', '1.8.9',
         ]);
     
-        client.stdout.on('data', (data) => console.log(`stdout: ${data}`));
-        client.stderr.on('data', (data) => log.warn(data));
+        client.on('error', (error) => {
+            log.warn(error);
+            return error;
+        })
+
+        client.stdout.on('data', (data) => console.log(`${data}`));
+        client.stderr.on('data', (data) => log.warn(`${data}`));
     
         window.webContents.send('progress', {
             percentage: 100,
             step: 'Game Started'
         });
-        log.info('Client Successfully Started.');
+        log.info('Client Successfully Started.' + launchAddress.status && `Joining ${launchAddress.address}...`);
 
         client.on('close', () => {
             window.webContents.send('clientQuit');
             log.info('Client has been quit.');
         });
+
         return true;   
     } catch (error) {
         log.warn(`Failed to launch client: ${error}`);

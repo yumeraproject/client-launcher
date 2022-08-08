@@ -30,12 +30,19 @@ const theme = extendTheme({
       200: "#B82B28",
       "100-T": "rgb(208, 49, 45, 0.75)",
       "200-T": "rgb(184, 43, 40, 0.75)"
+    },
+    success: {
+      100: "#68D391",
+      200: "#48BB78",
+      "100-T": "rgb(104, 211, 145, 0.75)",
+      "200-T": "rgb(72, 187, 120, 0.75)"
     }
   },
   shadows: {
     primaryGlow: '0px 0px 8px #5B3B8C',
     warningGlow: '0px 0px 8px #FF7F50',
-    errorGlow: '0px 0px 8px #D0312D'
+    errorGlow: '0px 0px 8px #D0312D',
+    successGlow: '0px 0px 8px #68D391'
   },
   fonts: {
     heading: `'Roboto', sans-serif`,

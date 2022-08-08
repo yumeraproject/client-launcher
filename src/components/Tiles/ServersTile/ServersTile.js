@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { GridItem, Heading, Grid, useColorModeValue, Box, Button } from '@chakra-ui/react';
 import ServerCard from './ServerCard';
 
