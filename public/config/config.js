@@ -29,3 +29,12 @@ const setLaunchDirectory = exports.setLaunchDirectory = (directory) => {
 const getLaunchDirectory = exports.getLaunchDirectory = () => {
     return store.get('launchDirectory', DEFAULT_MINECRAFT_DIRECTORY);
 }
+
+// Config: Game Resolution
+const setGameResolution = exports.setGameResolution = (resolution) => {
+    store.set('gameResolution', resolution);
+}
+
+const getGameResolution = exports.getGameResolution = () => {
+    return store.get('gameResolution', { width: 1280, height: 720 });
+}

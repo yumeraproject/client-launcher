@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useColorModeValue, VStack } from '@chakra-ui/react';
 import MemoryOption from './MemoryOption';
 import LaunchDirOption from './LaunchDirOption';
+import ResolutionOption from './ResolutionOption';
 
 const ConfigModal = ({ isOpen, onClose }) => {
 
@@ -11,6 +12,7 @@ const ConfigModal = ({ isOpen, onClose }) => {
             <ModalContent background={useColorModeValue('gray.200', 'dark.400')} overflow='hidden'>
                 <ModalHeader>Game Configuration</ModalHeader>
                 <ModalBody>
+                    <ResolutionOption />
                     <MemoryOption />
                     <LaunchDirOption />
                 </ModalBody>

@@ -15,7 +15,9 @@ const API = {
     setLaunchServer: (status, address) => ipcRenderer.send('setLaunchServer', status, address),
     getLaunchServer: () => ipcRenderer.invoke('getLaunchServer'),
     setLaunchDirectory: (dir) => ipcRenderer.invoke('setLaunchDirectory'),
-    getLaunchDirectory: () => ipcRenderer.invoke('getLaunchDirectory') 
+    getLaunchDirectory: () => ipcRenderer.invoke('getLaunchDirectory'),
+    setGameResolution: (resolution) => ipcRenderer.send('setGameResolution'),
+    getGameResolution: () => ipcRenderer.invoke('getGameResolution'),
 
 }
 

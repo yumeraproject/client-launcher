@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HStack, Heading, Text, VStack, Box, useColorModeValue, useToast, useDisclosure, Progress, ScaleFade } from '@chakra-ui/react';
+import { HStack, Heading, Text, VStack, Box, useColorModeValue, useToast, useDisclosure, Progress, ScaleFade, ButtonGroup } from '@chakra-ui/react';
 import TerminalCursor from '../TerminalCursor';
 import LaunchButton from './buttons/LaunchButton';
 import RunningButton from './buttons/RunningButton';
@@ -8,6 +8,7 @@ import ErrorButton from './buttons/ErrorButton';
 import ErrorModal from '../ErrorModal';
 import ConfigButton from './buttons/ConfigButton';
 import ConfigModal from '../Config/ConfigModal';
+import VersionButton from './buttons/VersionButton';
 
 const HomeHero = () => {
     const toast = useToast();
@@ -106,15 +107,15 @@ const HomeHero = () => {
                     </Text>
                     <HStack mt={6} >
                         <ConfigButton onOpen={configOnOpen} />
-                        {
-                            error ? (
-                                <ErrorButton displayError={displayError} />
-                            ) : isRunning ? (
-                                <RunningButton closeGame={closeGame} />
-                            ) : (
-                                <LaunchButton isLaunching={isLaunching} isOpen={errorIsOpen} launchGame={launchGame} />
-                            )
+                        {error ? (
+                            <ErrorButton displayError={displayError} />
+                        ) : isRunning ? (
+                            <RunningButton closeGame={closeGame} />
+                        ) : (
+                            <LaunchButton isLaunching={isLaunching} isOpen={errorIsOpen} launchGame={launchGame} />
+                        )
                         }
+                        <VersionButton isLaunching={isLaunching} isRunning={isRunning} />
                         <ScaleFade in={progress.step !== null}>
                             {error ? (
                                 <VStack pl={3} alignItems='left'>
@@ -123,7 +124,7 @@ const HomeHero = () => {
                                     <Progress value={progress.percentage} size='sm' width='200px' rounded='md' colorScheme='red' />
                                 </VStack>
                             ) : (
-                                <VStack pl={3} alignItems='left'>
+                                <VStack pl={3} alignItems='left' transition='all .5s ease-in-out'>
                                     <Text as='i' letterSpacing='4px' fontSize='2xs' lineHeight='0px' textTransform='uppercase' color='gray.100'>Launching</Text>
                                     <Text lineHeight='15px' pb={1}>{progress.step ? progress.step : 'Closing Game'}</Text>
                                     <Progress value={progress.percentage} size='sm' width='200px' rounded='md' colorScheme={progress.percentage === 100 ? 'green' : 'gray'} />

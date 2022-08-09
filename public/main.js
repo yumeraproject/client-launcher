@@ -11,7 +11,7 @@ const moment = require('moment');
 const jre = require('./util/jre/jre');
 const jreUtil = require('./util/jre/jreUtil');
 const { HWID } = require('./config/constants');
-const { getAllocatedMemory, setAllocatedMemory, getLaunchAddress, setLaunchAddress, getLaunchDirectory, setLaunchDirectory } = require('./config/config');
+const { getAllocatedMemory, setAllocatedMemory, getLaunchAddress, setLaunchAddress, getLaunchDirectory, setLaunchDirectory, setGameResolution, getGameResolution } = require('./config/config');
 
 // Constants
 const mainPath = system.homedir() + path.sep + ".ethereal" + path.sep;
@@ -115,11 +115,20 @@ ipcMain.handle('getLaunchDirectory', () => {
     return getLaunchDirectory();
 });
 
+ipcMain.on('setGameResolution', (event, resolution) => {
+    setGameResolution(resolution);
+    log.info(`CONFIG: Setting game resolution to ${resolution.width}X${resolution.height}`);
+});
+
+ipcMain.handle('getGameResolution', () => {
+    return getGameResolution();
+});
+
 ipcMain.handle('fetchVersions', () => {
     return {
         electron: process.versions.electron,
         node: process.versions.node,
-        launcher: '1.0.0',
+        launcher: app.getVersion(),
     }
 });
 
@@ -151,8 +160,8 @@ ipcMain.handle('launchClient', async () => {
             '-XX:+DisableAttachMechanism',
             `-cp`, jreUtil.joinClassPath([`${librariesPath}`, `${jarPath}`]),
             'net.minecraft.client.main.Main',
-            '--width', '854',
-            '--height', '480',
+            '--width', `${getGameResolution().width}`,
+            '--height', `${getGameResolution().height}`,
             '--version', 'Ethereal Client',
             '--accessToken', '0',
             '--userProperties', '{}',
