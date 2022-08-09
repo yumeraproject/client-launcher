@@ -124,7 +124,7 @@ ipcMain.handle('launchClient', async () => {
     log.info('Attempting to Start Game Client...');
 
     try {
-        const client = child.spawn(jre.driver(), [
+        const args = [
             `-Xms${(getAllocatedMemory() * 1000)}M`,
             `-Xmx${(getAllocatedMemory() * 1000)}M`,
             `-Djava.library.path=${nativesPath}`,
@@ -133,14 +133,20 @@ ipcMain.handle('launchClient', async () => {
             'net.minecraft.client.main.Main',
             '--width', '854',
             '--height', '480',
-            launchAddress.status && '--server', `${launchAddress.address}`,
             '--version', 'Ethereal Client',
             '--accessToken', '0',
             '--userProperties', '{}',
             '--gameDir', `${gameDirectory}`,
             `--assetsDir`, `${gameDirectory + path.sep}assets`,
             '--assetIndex', '1.8.9',
-        ]);
+        ];
+
+        if (launchAddress.status) {
+            args.push('--server');
+            args.push(launchAddress.address);
+        }
+
+        const client = child.spawn(jre.driver(), args);
     
         client.on('error', (error) => {
             log.warn(error);
@@ -154,7 +160,9 @@ ipcMain.handle('launchClient', async () => {
             percentage: 100,
             step: 'Game Started'
         });
-        log.info('Client Successfully Started.' + launchAddress.status && `Joining ${launchAddress.address}...`);
+
+        log.info('Client Successfully Started.');
+        if (launchAddress.status) log.info(`Joining ${launchAddress.address}...`)
 
         client.on('close', () => {
             window.webContents.send('clientQuit');

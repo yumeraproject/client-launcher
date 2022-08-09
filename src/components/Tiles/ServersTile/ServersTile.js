@@ -7,6 +7,19 @@ import mockIcon from '../../../images/logo.png';
 const ServersTile = ({ rowSpan, colSpan }) => {
     const backgroundColor = useColorModeValue('gray.100', 'dark.300');
 
+    const [selectedServer, setSelectedServer] = useState(null);
+
+    useEffect(() => {
+        window.api.getLaunchServer()
+            .then((server) => {
+                if (server.status === false) {
+                    setSelectedServer(null);
+                } else {
+                    setSelectedServer(server.address)
+                }
+            })
+    })
+
     const openLink = (link) => {
         window.api.openLink(link);
     }
@@ -16,8 +29,8 @@ const ServersTile = ({ rowSpan, colSpan }) => {
             <Heading letterSpacing={3} size='xs' as='i' color='dark.100'>PARTNERED SERVERS</Heading>
             <Box mt={2} bg={backgroundColor} p={2} rounded='md'>
                 <Grid templateColumns='repeat(4, 1fr)'>
-                    <ServerCard name='Ethereal Network' address='ethereal.dev' icon={mockIcon} />
-                    <ServerCard name='Lunar Network' address='lunar.gg' icon={'https://www.lunar.gg/static/images/logos/moon.svg'} />
+                    <ServerCard name='Ethereal Network' address='ethereal.dev' icon={mockIcon} selectedServer={selectedServer} setSelectedServer={setSelectedServer}/>
+                    <ServerCard name='Lunar Network' address='lunar.gg' icon={'https://www.lunar.gg/static/images/logos/moon.svg'} selectedServer={selectedServer} setSelectedServer={setSelectedServer}/>
                 </Grid>
                 <Button
                     size='xs'

@@ -2,40 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { Box, useColorModeValue, VStack, Image, Heading, Text, HStack, IconButton, Tooltip } from '@chakra-ui/react';
 import { FaPlay, FaCheckCircle } from 'react-icons/fa';
 
-const ServerCard = ({ name, address, icon, server }) => {
-    const [selectedServer, setSelectedServer] = useState(false);
-
+const ServerCard = ({ name, address, icon, selectedServer, setSelectedServer }) => {
+    const [isSelectedServer, setIsSelectedServer] = useState(false);
     const borderColor = useColorModeValue('gray.300', 'dark.200');
 
     useEffect(() => {
-        window.api.getLaunchServer()
-            .then((server) => {
-                if (server.status === false) {
-                    setSelectedServer(false);
-                    console.log('shits false lil bro' + address)
-                } else {
-                    if (server.address === address) {
-                        setSelectedServer(true);
-                        console.log(address + 'is seelected server')
-                    } else {
-                        setSelectedServer(false);
-                        console.log(address + 'isnt seelected server')
-                    }
-                }
-            })
-    })
+        if (selectedServer === address) {
+            setIsSelectedServer(true)
+        } else {
+            setIsSelectedServer(false)
+        }
+    }, [address, selectedServer])
 
     const updateLaunchServer = (status, address) => {
-        setSelectedServer(status);
+        if (status) {
+            setSelectedServer(address);
+        } else {
+            setSelectedServer(null);
+        }
+
         window.api.setLaunchServer(status, address);
     }
 
     return (
-        <Box m={1} rounded='md' bg={useColorModeValue('gray.300', 'dark.200')} shadow='md' overflow='hidden' border={'1px'} borderColor={selectedServer ? 'success.200' : borderColor}>
+        <Box m={1} rounded='md' bg={useColorModeValue('gray.300', 'dark.200')} shadow='md' overflow='hidden' border={'1px'} borderColor={isSelectedServer ? 'success.200' : borderColor}>
             <VStack spacing={0}>
                 <HStack py={2}>
                     <Image src={icon} alt={name} rounded='md' h='40px' />
-                    {selectedServer ? (
+                    {isSelectedServer ? (
                         <Tooltip hasArrow label={`Selected ${address}`} bg='dark.100' color='gray.200' rounded='lg' placement='top'>
                             <IconButton
                                 icon={<FaCheckCircle />}
