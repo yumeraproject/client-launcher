@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 require('@electron/remote/main').initialize();
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -11,14 +11,13 @@ const moment = require('moment');
 const jre = require('./util/jre/jre');
 const jreUtil = require('./util/jre/jreUtil');
 const { HWID } = require('./config/constants');
-const { getAllocatedMemory, setAllocatedMemory, getLaunchAddress, setLaunchAddress } = require('./config/config');
+const { getAllocatedMemory, setAllocatedMemory, getLaunchAddress, setLaunchAddress, getLaunchDirectory, setLaunchDirectory } = require('./config/config');
 
 // Constants
 const mainPath = system.homedir() + path.sep + ".ethereal" + path.sep;
 const nativesPath = mainPath + "natives";
 const librariesPath = mainPath + "libraries/*";
 const jarPath = mainPath + "client.jar";
-const gameDirectory = system.homedir() + path.sep + "AppData" + path.sep + "Roaming" + path.sep + ".minecraft";
 
 // Set Log directory
 log.transports.file.resolvePath = () => path.join(mainPath, `logs/launcher-${moment().format("YYYY-MM-DD")}.log`);
@@ -95,6 +94,27 @@ ipcMain.handle('getLaunchServer', () => {
     return getLaunchAddress();
 });
 
+ipcMain.handle('setLaunchDirectory', () => {
+    const directory = dialog.showOpenDialogSync({
+        title: 'Select Minecraft directory',
+        defaultPath: `${getLaunchDirectory()}`,
+        properties: ['openDirectory', 'createDirectory', 'showHiddenFiles']
+    });
+
+    if (directory) {
+        setLaunchDirectory(directory);
+        log.info('CONFIG: Setting launch directory to ' + directory);
+
+        return directory;
+    } else {
+        return getLaunchDirectory();
+    }
+});
+
+ipcMain.handle('getLaunchDirectory', () => {
+    return getLaunchDirectory();
+});
+
 ipcMain.handle('fetchVersions', () => {
     return {
         electron: process.versions.electron,
@@ -136,8 +156,8 @@ ipcMain.handle('launchClient', async () => {
             '--version', 'Ethereal Client',
             '--accessToken', '0',
             '--userProperties', '{}',
-            '--gameDir', `${gameDirectory}`,
-            `--assetsDir`, `${gameDirectory + path.sep}assets`,
+            '--gameDir', `${getLaunchDirectory()}`,
+            `--assetsDir`, `${getLaunchDirectory() + path.sep}assets`,
             '--assetIndex', '1.8.9',
         ];
 
@@ -147,7 +167,7 @@ ipcMain.handle('launchClient', async () => {
         }
 
         const client = child.spawn(jre.driver(), args);
-        
+
         client.on('error', (error) => {
             log.warn(error);
             return error;

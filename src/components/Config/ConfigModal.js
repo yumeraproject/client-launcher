@@ -1,16 +1,18 @@
 import React from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Box, Text, useColorModeValue } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useColorModeValue, VStack } from '@chakra-ui/react';
 import MemoryOption from './MemoryOption';
+import LaunchDirOption from './LaunchDirOption';
 
 const ConfigModal = ({ isOpen, onClose }) => {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
             <ModalOverlay />
-            <ModalContent background={useColorModeValue('gray.200', 'dark.400')}>
+            <ModalContent background={useColorModeValue('gray.200', 'dark.400')} overflow='hidden'>
                 <ModalHeader>Game Configuration</ModalHeader>
                 <ModalBody>
                     <MemoryOption />
+                    <LaunchDirOption />
                 </ModalBody>
 
                 <ModalFooter>

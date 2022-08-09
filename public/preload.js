@@ -14,6 +14,9 @@ const API = {
     getMaxAllocatedMemory: () => ipcRenderer.invoke('getMaxAllocatedMemory'),
     setLaunchServer: (status, address) => ipcRenderer.send('setLaunchServer', status, address),
     getLaunchServer: () => ipcRenderer.invoke('getLaunchServer'),
+    setLaunchDirectory: (dir) => ipcRenderer.invoke('setLaunchDirectory'),
+    getLaunchDirectory: () => ipcRenderer.invoke('getLaunchDirectory') 
+
 }
 
 contextBridge.exposeInMainWorld("api", API);

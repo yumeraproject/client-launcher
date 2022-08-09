@@ -94,6 +94,7 @@ const HomeHero = () => {
                 backgroundRepeat='no-repeat'
                 rounded='lg'
                 color='white'
+                overflow='hidden'
             >
                 <Box p={5} backdropFilter='blur(1px)'>
                     <HStack>

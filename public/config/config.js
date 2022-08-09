@@ -1,4 +1,5 @@
 const Store = require('electron-store');
+const { DEFAULT_MINECRAFT_DIRECTORY } = require('./constants');
 
 const store = new Store();
 
@@ -18,4 +19,13 @@ const setLaunchAddress = exports.setLaunchAddress = (status, address) => {
 
 const getLaunchAddress = exports.getLaunchAddress = () => {
     return store.get('launchAddress');
+}
+
+// Config: Minecraft Directory
+const setLaunchDirectory = exports.setLaunchDirectory = (directory) => {
+    store.set('launchDirectory', directory);
+}
+
+const getLaunchDirectory = exports.getLaunchDirectory = () => {
+    return store.get('launchDirectory', DEFAULT_MINECRAFT_DIRECTORY);
 }
