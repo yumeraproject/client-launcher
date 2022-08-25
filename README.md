@@ -1,3 +1,3 @@
-## The launcher for Ethereal Client
+## This is an old project
 
-Built on React and Electron
+Now discontinued and has been archived
